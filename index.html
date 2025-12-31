@@ -3,120 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Rad - Happy New Year</title>
+    <title>A Special Surprise</title>
     <style>
         body {
             margin: 0;
-            background: #0a0a0a;
+            background: #0f0f0f;
             font-family: 'Georgia', serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            color: white;
         }
 
-        canvas { position: absolute; top: 0; left: 0; z-index: 1; }
-
-        /* Envelope Container */
-        .envelope-wrapper {
+        .container {
             position: relative;
-            cursor: pointer;
             z-index: 10;
-            transition: transform 0.5s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .envelope {
+        .envelope-wrapper {
             position: relative;
             width: 300px;
             height: 200px;
-            background: #b31b1b; /* Deep Red */
+            background: #a31616;
             border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            margin-bottom: 50px;
         }
 
-        /* Envelope Flap */
         .flap {
             position: absolute;
             top: 0;
             width: 0; height: 0;
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
-            border-top: 100px solid #d32f2f;
+            border-top: 110px solid #d32f2f;
             transform-origin: top;
-            transition: transform 0.4s 0.2s;
+            transition: transform 0.6s ease;
             z-index: 3;
         }
 
-        /* The Card Inside */
         .letter {
             position: absolute;
-            bottom: 10px;
+            bottom: 5px;
             left: 10px;
             width: 280px;
             height: 180px;
-            background: white;
+            background: #fffdf5;
             color: #333;
             text-align: center;
             border-radius: 5px;
-            transition: transform 0.6s;
+            transition: transform 0.8s ease;
             z-index: 2;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 10px;
+            padding: 20px;
             box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
         }
 
-        .letter h1 { margin: 0; color: #b31b1b; font-size: 1.5rem; }
-        .letter p { font-size: 0.9rem; margin: 10px 0; }
+        .letter h1 { margin: 0; color: #a31616; font-size: 1.4rem; }
+        .letter p { font-size: 1rem; line-height: 1.4; color: #444; }
 
-        /* Open State Styles */
-        .open .flap { transform: rotateX(180deg); z-index: 1; }
-        .open .letter { transform: translateY(-120px); z-index: 4; height: 250px; }
-        
-        /* Button */
+        .open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .open .letter {
+            transform: translateY(-130px);
+            z-index: 4;
+            height: 220px;
+        }
+
         #openBtn {
-            position: absolute;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 25px;
-            background: #f9d423;
+            padding: 12px 35px;
+            background: linear-gradient(45deg, #f9d423, #ffdb3a);
             border: none;
-            border-radius: 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
             font-weight: bold;
+            color: #443300;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(249, 212, 35, 0.4);
+            box-shadow: 0 5px 15px rgba(249, 212, 35, 0.4);
+            transition: 0.3s;
         }
 
         .hidden { display: none; }
+        canvas { position: absolute; top: 0; left: 0; z-index: 1; }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <div class="envelope-wrapper" id="wrapper">
-        <div class="envelope">
+    <div class="container">
+        <div class="envelope-wrapper" id="envelope">
             <div class="flap"></div>
             <div class="letter">
-                <h1>Happy New Year, <br>My Dear Rad!</h1>
-                <p>May 2026 be your brightest year yet. Filled with love, laughter, and magic, I Love You so much and You have given me such a wonderful year to remember! ✨</p>
-                <p style="font-size: 1.2rem;">🎆🥂✨</p>
+                <h1>Happy New Year!</h1>
+                <p>May 2026 be filled with magic, laughter, and all the success you've been dreaming of! ✨🥂</p>
             </div>
         </div>
-        <button id="openBtn" onclick="openCard()">OPEN</button>
+        <button id="openBtn" onclick="revealCard()">OPEN SURPRISE</button>
     </div>
 
     <script>
-        function openCard() {
-            document.getElementById('wrapper').classList.add('open');
+        function revealCard() {
+            document.getElementById('envelope').classList.add('open');
             document.getElementById('openBtn').classList.add('hidden');
-            startFireworks();
+            initFireworks();
         }
 
-        // Firework Logic
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -131,39 +131,39 @@
         class Particle {
             constructor(x, y, color) {
                 this.x = x; this.y = y; this.color = color;
-                this.velocity = { x: (Math.random() - 0.5) * 8, y: (Math.random() - 0.5) * 8 };
+                this.velocity = { x: (Math.random() - 0.5) * 10, y: (Math.random() - 0.5) * 10 };
                 this.alpha = 1;
             }
             draw() {
                 ctx.globalAlpha = this.alpha;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
                 ctx.fill();
             }
             update() {
                 this.x += this.velocity.x; this.y += this.velocity.y;
-                this.alpha -= 0.01;
+                this.alpha -= 0.015;
             }
         }
 
-        function startFireworks() {
-            function animate() {
-                ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+        function initFireworks() {
+            function loop() {
+                ctx.fillStyle = 'rgba(15, 15, 15, 0.15)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                if (Math.random() < 0.05) {
+                if (Math.random() < 0.08) {
                     const x = Math.random() * canvas.width;
-                    const y = Math.random() * canvas.height/2;
+                    const y = Math.random() * (canvas.height / 2);
                     const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
-                    for (let i = 0; i < 30; i++) particles.push(new Particle(x, y, color));
+                    for (let i = 0; i < 40; i++) particles.push(new Particle(x, y, color));
                 }
                 particles.forEach((p, i) => {
                     if (p.alpha > 0) { p.update(); p.draw(); }
                     else { particles.splice(i, 1); }
                 });
-                requestAnimationFrame(animate);
+                requestAnimationFrame(loop);
             }
-            animate();
+            loop();
         }
     </script>
 </body>
